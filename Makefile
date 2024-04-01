@@ -1,6 +1,12 @@
 ansible_ad-hoc: vm_prepare
 	ansible all -i inventory.ini -u imokretsov -m ping
 
+ansible_install_git:
+	ansible-playbook -i inventory.ini playbook_install_git.yml
+
+ansible_remove_git:
+	ansible-playbook -i inventory.ini playbook_remove_git.yml
+
 vm_prepare:
 	vagrant up
 
