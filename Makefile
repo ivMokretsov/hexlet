@@ -7,6 +7,10 @@ ansible_install_git:
 ansible_remove_git:
 	ansible-playbook -i inventory.ini playbook_remove_git.yml
 
+TAG ?= all
+ansible_tags:
+	ansible-playbook -i inventory.ini playbook_tags.yml -t $(TAG)
+
 vm_prepare:
 	vagrant up
 

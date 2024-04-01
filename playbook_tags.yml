@@ -1,0 +1,33 @@
+---
+- name: Tags
+  hosts: server01
+  become: true
+
+  tasks:
+    - name: install apps
+      ansible.builtin.apt:
+        pkg:
+        - git
+        - make
+        - nodejs
+        state: present
+        update_cache: true
+      tags: apps
+
+    - name: create user Ivan
+      ansible.builtin.user:
+        name: ivan
+        comment: Ivan Mokretsov
+      tags: users
+
+    - name: create user arya
+      ansible.builtin.user:
+        name: arya
+        comment: arya arya
+      tags: users
+
+    - name: create user sansa
+      ansible.builtin.user:
+        name: sansa
+        comment: sansa sansa
+      tags: users
