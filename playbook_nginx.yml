@@ -1,6 +1,10 @@
 ---
 - name: Install and configurate Nginx
   hosts: all
+  vars:
+    nginx_port: 8081
+    root_dir: /usr/share/nginx/html
+    message: 'Hello, test vars!'
   become: true
   handlers:
     - name: restart nginx
@@ -13,14 +17,14 @@
         name: nginx
         state: latest
     - name: update nginx config
-      ansible.builtin.copy:
-        src: files/nginx.conf
+      ansible.builtin.template:
+        src: files/nginx.conf.j2
         dest: /etc/nginx/nginx.conf
       notify:
         - restart nginx
     - name: update nginx config
-      ansible.builtin.copy:
-        src: files/index.html
-        dest: /usr/share/nginx/html/index.html
+      ansible.builtin.template:
+        src: files/index.html.j2
+        dest: "{{ root_dir }}/index.html"
       notify:
         - restart nginx
