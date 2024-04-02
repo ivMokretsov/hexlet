@@ -11,6 +11,9 @@ TAG ?= all
 ansible_tags:
 	ansible-playbook -i inventory.ini playbook_tags.yml -t $(TAG)
 
+ansible_nginx:
+	ansible-playbook -i inventory.ini playbook_nginx.yml
+
 vm_prepare:
 	vagrant up
 
