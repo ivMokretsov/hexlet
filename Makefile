@@ -4,6 +4,9 @@ ansible_ad-hoc:
 ansible_install_git:
 	ansible-playbook -i inventory.ini playbook_install_git.yml
 
+ansible_install_git_wo_facts:
+	ansible-playbook -i inventory.ini playbook_install_git_wo_facts.yml
+
 ansible_remove_git:
 	ansible-playbook -i inventory.ini playbook_remove_git.yml
 
