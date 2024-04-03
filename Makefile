@@ -1,4 +1,4 @@
-ansible_ad-hoc: vm_prepare
+ansible_ad-hoc:
 	ansible all -i inventory.ini -u imokretsov -m ping
 
 ansible_install_git:
@@ -13,9 +13,3 @@ ansible_tags:
 
 ansible_nginx:
 	ansible-playbook -i inventory.ini playbook_nginx.yml
-
-vm_prepare:
-	vagrant up
-
-vm_destroy:
-	vagrant destroy -f
