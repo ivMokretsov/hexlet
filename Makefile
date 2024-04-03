@@ -17,6 +17,9 @@ ansible_tags:
 ansible_nginx:
 	ansible-playbook -i inventory.ini playbook_nginx.yml
 
+ansible_loop:
+	ansible-playbook playbook_loop.yml
+
 add_known_hosts:
 	ssh-keyscan -H 192.168.1.104 >> ~/.ssh/known_hosts
 	ssh-keyscan -H 192.168.1.58 >> ~/.ssh/known_hosts

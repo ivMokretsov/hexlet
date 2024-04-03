@@ -1,0 +1,40 @@
+---
+- name: Loops
+  hosts: webservers
+  become: true
+  vars:
+    users:
+      - jaime
+      - sansa
+      - robert
+  tasks:
+    - name: add users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+      loop:
+        "{{ users }}"
+      
+    - name: config git
+      ansible.builtin.template:
+        src: files/gitconfig.j2
+        dest: "/home/{{ item }}/.gitconfig"
+      loop:
+        "{{ users }}"
+
+    - name: ensure .ssh directory exists
+      ansible.builtin.file:
+        path: "/home/{{ item }}/.ssh"
+        state: directory
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0700'
+      loop: "{{ users }}"
+
+    - name: Add authorized key for each user
+      ansible.builtin.authorized_key:
+        user: "{{ item }}"
+        state: present
+        key: "{{ lookup('file', 'files/id_rsa.pub') }}"
+      loop: "{{ users }}"
+
