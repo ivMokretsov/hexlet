@@ -1,6 +1,6 @@
 ---
 - name: Install and configurate Nginx
-  hosts: all
+  hosts: ubuntu
   vars:
     nginx_port: 8081
     root_dir: /usr/share/nginx/html
@@ -13,6 +13,16 @@
         name: nginx
         state: reloaded
   tasks:
+    - name: Install cowsay
+      ansible.builtin.apt:
+        name: cowsay
+        update_cache: true
+        state: latest
+
+    - name: Run cowsay command
+      ansible.builtin.command: /usr/games/cowsay "This is server {{ ansible_nodename }}!"
+      register: cowsay_result
+
     - name: install nginx
       ansible.builtin.apt:
         name: nginx

@@ -1,5 +1,17 @@
 ---
-- hosts: webservers
+- hosts: ubuntu
+  become: true
   tasks:
-    - debug:
-        msg: "{{ ansible_nodename }}"
+    - name: Install cowsay
+      ansible.builtin.apt:
+        name: cowsay
+        update_cache: true
+        state: latest
+
+    - name: Run cowsay command
+      ansible.builtin.command: /usr/games/cowsay "hello {{ ansible_nodename }}"
+      register: cs
+
+    - name: Debug output of cowsay
+      ansible.builtin.debug:
+        var: cs
