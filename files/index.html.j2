@@ -7,7 +7,8 @@
   <title>Hello World!</title>
 </head>
 <body>
-  <h1> {{ message }} </h1>
-  <h2>This is server {{ server_name }}!</h2>
+  <h1> Hello World </h1>
+  <h2> {{ message | upper }} </h2>
+  <small>Deployed at: {{ '%a, %d %b %Y %H:%M:%S' | strftime(ansible_date_time.epoch) }}</small>
 </body>
 </html>

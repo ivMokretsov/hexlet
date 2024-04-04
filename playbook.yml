@@ -1,0 +1,5 @@
+---
+- hosts: webservers
+  tasks:
+    - debug:
+        msg: "{{ ansible_nodename }}"

@@ -4,7 +4,8 @@
   vars:
     nginx_port: 8081
     root_dir: /usr/share/nginx/html
-    message: 'Hello, test vars!'
+    message: "This is server {{ ansible_nodename }}!"
+
   become: true
   handlers:
     - name: restart nginx
