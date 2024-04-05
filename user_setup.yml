@@ -1,0 +1,6 @@
+- hosts: webservers
+  become: true
+  roles:
+    - role: user_setup
+      vars:
+        user_name: "dev1"

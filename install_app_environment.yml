@@ -1,0 +1,8 @@
+---
+- name: Install app environment
+  hosts: ubuntu01
+  become: true
+  roles:
+    - role: geerlingguy.git
+    - role: geerlingguy.nodejs
+    - role: geerlingguy.postgresql

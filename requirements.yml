@@ -1,0 +1,6 @@
+roles:
+  - name: nginxinc.nginx
+    version: 0.24.1
+  - name: geerlingguy.git
+  - name: geerlingguy.postgresql
+  - name: geerlingguy.nodejs

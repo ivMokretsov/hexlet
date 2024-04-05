@@ -1,0 +1,41 @@
+---
+- name: Добавление пользователя {{ user_name }}
+  user:
+    name: "{{ user_name }}"
+    shell: /bin/bash
+    create_home: yes
+
+- name: Настройка sudo без пароля для пользователя {{ user_name }}
+  lineinfile:
+    path: "/etc/sudoers.d/{{ user_name }}"
+    line: '{{ user_name }} ALL=(ALL) NOPASSWD: ALL'
+    create: yes
+    validate: 'visudo -cf %s'
+
+- name: Установка прав на файл sudoers для пользователя {{ user_name }}
+  file:
+    path: "/etc/sudoers.d/{{ user_name }}"
+    mode: 0440
+
+- name: Создание каталога .ssh для пользователя {{ user_name }}
+  file:
+    path: "/home/{{ user_name }}/.ssh"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0700
+
+- name: Копирование публичных ключей SSH в authorized_keys для пользователя {{ user_name }}
+  authorized_key:
+    user: "{{ user_name }}"
+    state: present
+    key: "{{ lookup('file', item) }}"
+  loop: "{{ ssh_keys }}"
+
+- name: Добавление Git конфига для пользователя
+  template:
+    src: templates/gitconfig.j2
+    dest: "/home/{{ user_name }}/.gitconfig"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+  when: user_name is defined
