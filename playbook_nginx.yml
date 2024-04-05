@@ -1,6 +1,6 @@
 ---
 - name: Install and configurate Nginx
-  hosts: ubuntu
+  hosts: ubuntu01
   vars:
     nginx_port: 8081
     root_dir: /usr/share/nginx/html
