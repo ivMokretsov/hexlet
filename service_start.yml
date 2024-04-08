@@ -1,0 +1,19 @@
+---
+- name: Start service
+  hosts: server01
+  become: true
+  vars:
+    service_name: undef
+
+  tasks:
+    - name: Check Service
+      ansible.builtin.service_facts:
+
+    - debug:
+        var: services
+
+    - name: Start Service
+      ansible.builtin.service:
+        name: "{{ service_name }}"
+        state: started
+      when: service_name + '.service' in services

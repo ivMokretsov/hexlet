@@ -1,0 +1,32 @@
+---
+- name: Настройка сервера и управление доступом
+  hosts: ubuntu01
+  become: true
+  vars:
+    required_packages:
+      - git
+      - vim
+      - tree
+    ssh_key: "{{ lookup('file', 'files/id_rsa.pub') }}"
+    developer_username: new_developer
+
+  tasks:
+    - name: Установка необходимых пакетов
+      ansible.builtin.apt:
+        name: "{{ required_packages }}"
+        state: present
+      tags: packages
+
+    - name: Добавление пользователя для нового разработчика
+      ansible.builtin.user:
+        name: "{{ developer_username }}"
+        state: present
+        create_home: yes
+      tags: user
+
+    - name: Добавление SSH ключа для нового разработчика
+      ansible.posix.authorized_key:
+        user: "{{ developer_username }}"
+        state: present
+        key: "{{ ssh_key }}"
+      tags: ssh_key
